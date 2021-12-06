@@ -1,9 +1,5 @@
 from .. import preprocess
 
 
-def test_increment():
-    assert preprocess.increment(3) == 4
-
-
-def test_decrement():
-    assert preprocess.decrement(3) == 2
+def test_load_energy_data():
+    assert preprocess.load_energy_data().shape == (19735, 29)
