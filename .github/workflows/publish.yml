@@ -24,9 +24,9 @@ jobs:
 
       - name: Bump version
         run: |
-          bump2version patch
           git config --global user.email ${{ github.actor }}@users.noreply.github.com
           git config --global user.name ${{ github.actor }}
+          bump2version patch
 
       - name: Build a binary wheel and a source tarball
         run: python -m build --sdist --wheel --outdir dist/ .
