@@ -38,14 +38,13 @@ jobs:
       - name: Check package version
         run: cat .bumpversion.cfg
 
-      # - name: Publish distribution 📦 to Production PyPI
-      #   uses: pypa/gh-action-pypi-publish@master
-      #   with:
-      #     password: ${{ secrets.pypi_password }}
-      #     repository_url: https://upload.pypi.org/legacy/
+      - name: Publish distribution 📦 to Production PyPI
+        uses: pypa/gh-action-pypi-publish@master
+        with:
+          password: ${{ secrets.pypi_password }}
+          repository_url: https://upload.pypi.org/legacy/
 
       - name: Commit bumped version to GitHub
-        # git commit -am "bumping PyPi version"
         run: |
           git show
           git push origin main
