@@ -11,22 +11,32 @@ jobs:
     name: Publish Python distributions to PyPI
     steps:
       - uses: actions/checkout@master
+
       - name: Set up Python 3.9
         uses: actions/setup-python@v2
         with:
           python-version: 3.9
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install bump2version setuptools wheel twine build
+
       - name: Bump version
-        run: bump2version patch
+        run: |
+          bump2version patch
+          git config --global user.email ${{ github.actor }}@users.noreply.github.com
+          git config --global user.name ${{ github.actor }}
+
       - name: Build a binary wheel and a source tarball
         run: python -m build --sdist --wheel --outdir dist/ .
+
       - name: Check directory list
         run: ls
+
       - name: Check package version
         run: cat .bumpversion.cfg
+
       - name: Publish distribution 📦 to Production PyPI
         uses: pypa/gh-action-pypi-publish@master
         with:
