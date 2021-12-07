@@ -1,2 +1,2 @@
-# Preprocess module
+# Preprocessing for Time Series
 ::: timewarpy.preprocess
