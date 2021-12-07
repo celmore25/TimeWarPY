@@ -4,7 +4,7 @@ from pathlib import Path
 
 # readme description
 this_directory = Path(__file__).parent
-long_description = (this_directory / "/docs/index.md").read_text()
+long_description = (this_directory / "docs/index.md").read_text()
 
 # libraries
 requirements = [
