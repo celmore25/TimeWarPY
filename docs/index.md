@@ -1,6 +1,7 @@
 # TimeWarPY - Time Series Pre and Post Processing Methods
 
 [GitHub](https://github.com/celmore25/TimeWarPY)
+
 [Full Documentation](https://timewarpy.readthedocs.io/en/latest/)
 
 ## Background and Objective
