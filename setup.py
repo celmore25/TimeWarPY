@@ -10,6 +10,7 @@ setup(
     description='Time Series Processing',
     author='Clay Elmore',
     packages=setuptools.find_packages(),
+    license='BSD 3-Clause License',
     include_package_data=True,
     install_requires=requirements,
     scripts=[],
