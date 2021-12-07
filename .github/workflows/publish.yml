@@ -42,6 +42,8 @@ jobs:
         with:
           password: ${{ secrets.pypi_password }}
           repository_url: https://upload.pypi.org/legacy/
-      # - name: Commit bumped version to GitHub
-      #   run: stuff
 
+      - name: Commit bumped version to GitHub
+        run: |
+          git commit -am "bumping PyPi version"
+          git push
