@@ -3,6 +3,7 @@ nav:
   - Home: index.md
   - Code Reference:
     - Preprocess: preprocess-reference.md
+    - Datasets: datasets-reference.md
 theme: readthedocs
 plugins:
   - search
