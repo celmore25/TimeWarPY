@@ -6,8 +6,9 @@ on:
     branches: [ main ]
 
 jobs:
-  bump-version:
+  build-and-publish:
     runs-on: ubuntu-latest
+    name: Publish Python distributions to PyPI
     steps:
       - uses: actions/checkout@master
       - name: Set up Python 3.9
@@ -17,26 +18,20 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install bump2version setuptools wheel twine
-  build-and-publish:
-    needs: bump-version
-    name: Publish Python distributions to PyPI and/or TestPyPI
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.9
-      - name: Install build package
-        run: pip install build
+          pip install bump2version setuptools wheel twine build
+      - name: Bump version
+        run: bump2version patch
       - name: Build a binary wheel and a source tarball
         run: python -m build --sdist --wheel --outdir dist/ .
       - name: Check directory list
         run: ls
+      - name: Check package version
+        run: cat .bumpversion.cfg
       - name: Publish distribution 📦 to Production PyPI
         uses: pypa/gh-action-pypi-publish@master
         with:
           password: ${{ secrets.pypi_password }}
           repository_url: https://upload.pypi.org/legacy/
+      # - name: Commit bumped version to GitHub
+      #   run: stuff
 
