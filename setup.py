@@ -6,8 +6,8 @@ requirements = ['pandas>=1.0.0']
 
 setup(
     name='timewarpy',
-    version='0.0.1',
-    description='Time Series Processing',
+    version='0.0.2',
+    description='Time series processing framework and utilities for deep learning',
     author='Clay Elmore',
     packages=setuptools.find_packages(),
     license='BSD 3-Clause License',
