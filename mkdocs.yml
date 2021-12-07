@@ -1,5 +1,4 @@
 site_name: TimeWarPY
-site_url: https://timewarpy.readthedocs.io/
 nav:
   - Home: index.md
   - Code Reference:
