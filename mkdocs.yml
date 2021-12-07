@@ -1,5 +1,5 @@
 site_name: TimeWarPY
-site_url: https://readthedocs.org/projects/timewarpy/
+site_url: https://timewarpy.readthedocs.io/en/latest/
 nav:
   - Home: index.md
   - Code Reference:
