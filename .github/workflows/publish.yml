@@ -6,7 +6,20 @@ on:
     branches: [ main ]
 
 jobs:
-  build-n-publish:
+  bump-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install bump2version setuptools wheel twine
+  build-and-publish:
+    needs: bump-version
     name: Publish Python distributions to PyPI and/or TestPyPI
     runs-on: ubuntu-latest
     steps:
@@ -26,3 +39,4 @@ jobs:
         with:
           password: ${{ secrets.pypi_password }}
           repository_url: https://upload.pypi.org/legacy/
+

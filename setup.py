@@ -1,13 +1,22 @@
 from setuptools import setup
 import setuptools
+from pathlib import Path
 
+# readme description
+this_directory = Path(__file__).parent
+long_description = (this_directory / "README.md").read_text()
 
-requirements = ['pandas>=1.0.0']
+# libraries
+requirements = [
+    'pandas>=1.0.0',
+]
 
 setup(
     name='timewarpy',
-    version='0.0.2',
+    version='0.0.3',
     description='Time series processing framework and utilities for deep learning',
+    long_description=long_description,
+    long_description_content_type='text/markdown',
     author='Clay Elmore',
     packages=setuptools.find_packages(),
     license='BSD 3-Clause License',
