@@ -1,0 +1,5 @@
+site_name: TimeWarPY
+site_url: https://readthedocs.org/projects/timewarpy/
+nav:
+  - Home: index.md
+theme: readthedocs
