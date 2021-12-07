@@ -6,7 +6,7 @@ requirements = ['pandas>=1.0.0']
 
 setup(
     name='timewarpy',
-    version='0.1',
+    version='0.0.1',
     description='Time Series Processing',
     author='Clay Elmore',
     packages=setuptools.find_packages(),
