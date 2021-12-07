@@ -2,4 +2,9 @@ site_name: TimeWarPY
 site_url: https://readthedocs.org/projects/timewarpy/
 nav:
   - Home: index.md
+  - Code Reference:
+    - Preprocess: preprocess-reference.md
 theme: readthedocs
+plugins:
+  - search
+  - mkdocstrings
