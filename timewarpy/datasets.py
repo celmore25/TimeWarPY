@@ -1,5 +1,4 @@
 import pandas as pd
-from timewarpy import sample_data
 
 
 def load_energy_data():
@@ -11,4 +10,4 @@ def load_energy_data():
     Returns:
         pandas.DataFrame: time series dataset
     """
-    return pd.read_csv(sample_data.__path__[0] + '/energydata_complete.csv')
+    return pd.read_csv('https://archive.ics.uci.edu/ml/machine-learning-databases/00374/energydata_complete.csv')
