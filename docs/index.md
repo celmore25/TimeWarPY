@@ -16,6 +16,14 @@ TimeWarPY can be installed directly with PyPi or directly from source [here](htt
 pip install timewarpy
 ```
 
-## General Use Case
+## Motivation
 
-## Examples and Usage
+### Univariate Data
+
+Time series data sets for deep learning generally need to be put in the visual format below. There will be a sequence in time (vector) for training and a prediction sequence in time (another vector) that is normally shorter.
+
+![univariate_single](img/examples/univariate_single.png)
+
+This single example is then rolled in time to generate many examples of these training and predicting sequences as shown below.
+
+![univariate_single](img/examples/univariate_multiple.png)

@@ -1,6 +1,7 @@
 site_name: TimeWarPY
 nav:
   - Home: index.md
+  - Examples and Usage: examples.md
   - Code Reference:
     - Preprocess: preprocess-reference.md
     - Datasets: datasets-reference.md
