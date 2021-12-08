@@ -26,4 +26,4 @@ Time series data sets for deep learning generally need to be put in the visual f
 
 This single example is then rolled in time to generate many examples of these training and predicting sequences as shown below.
 
-![univariate_single](img/examples/univariate_multiple.png)
+![univariate_multiple](img/examples/univariate_multiple.png)
