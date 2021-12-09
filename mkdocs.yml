@@ -1,17 +1,26 @@
 site_name: TimeWarPY
+
 nav:
   - Home: index.md
   - Examples and Usage: examples.md
   - Code Reference:
     - Preprocess: preprocess-reference.md
     - Datasets: datasets-reference.md
+
 theme:
   features:
     - content.code.annotate
   name: "material"
+  logo: img/favicon.ico
+  favicon: img/favicon.ico
+  palette:
+    primary: blue grey
+    scheme: default
+
 plugins:
   - search
   - mkdocstrings
+
 markdown_extensions:
   - pymdownx.highlight
   - pymdownx.inlinehilite
