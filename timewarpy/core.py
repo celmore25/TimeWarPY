@@ -63,9 +63,33 @@ class UnivariateTS:
         return X, y
 
     def fit_transform(self, df, column):
+        """Runs the core.UnivariateTS fit and transform functions in one call.
+
+        Args:
+            df (pandas.DataFrame): univariate time series
+            column (str): column to use in the dataframe
+
+        Returns:
+            tuple: X (np.array) training vectors, y (np.array) forecasting/prediction vectors
+        """
         self.fit(df, column)
         X, y = self.transform(df, column)
         return X, y
 
-    def inverse_transform(self):
-        return None
+    def inverse_transform(self, vec):
+        """Takes a vector and applies all non-windowing processing inversely
+        to get back to the original windowed matrix. This is useful for error
+        measurement that is unscaled.
+
+        Args:
+            vec (array_like): time series set of vectors (univariate)
+
+        Returns:
+            array_like: inverse processes set of vectors
+        """
+
+        if len(vec.shape) > 2:
+            vec_inv = self.scaler.inverse_transform(vec[:, :, 0])
+        else:
+            vec_inv = self.scaler.inverse_transform(vec)
+        return vec_inv
