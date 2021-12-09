@@ -4,6 +4,7 @@ nav:
   - Home: index.md
   - Examples and Usage: examples.md
   - Code Reference:
+    - Core: core-reference.md
     - Preprocess: preprocess-reference.md
     - Datasets: datasets-reference.md
 
