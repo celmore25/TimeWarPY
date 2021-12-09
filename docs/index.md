@@ -27,3 +27,8 @@ Time series data sets for deep learning generally need to be put in the visual f
 This single example is then rolled in time to generate many examples of these training and predicting sequences as shown below.
 
 ![univariate_multiple](img/examples/univariate_multiple.png)
+
+There are a million variations to the rolling mechanism shown above including changing window sizes, increasing the number of time increments to roll, dealing with non-continuous time series, adding contextual information, dealing with time dependent meta data storage, and much more. TimeWarPY is intended to standardize these transformations to be ready for deep learning methods out of the box.
+
+The example here: [Preprocessing Univariate Data for Recurrent Neural Network Training](./examples/#preprocessing-univariate-data-for-recurrent-neural-network-training) gives a good indication how quickly TimeWarPY can get you training models with TensorFlow.
+

@@ -3,3 +3,5 @@ numpy
 pytest
 mkdocs
 mkdocstrings
+Pygments
+mkdocs-material
