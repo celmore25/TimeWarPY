@@ -1,15 +1,15 @@
 import numpy as np
 
 
-def create_univariate_windows(df, train_horizon, pred_horizon, column):
-    """Given a pandas dataframe, this will create deep learning friendly
+def create_univariate_windows(df, train_horizon, pred_horizon, column=None):
+    """Given a dataframe or raw data sequence, this will create deep learning friendly
     matrices (X, y) with a given training and prediction length.
 
     Args:
-        df (pandas.Dataframe): raw data with column names
+        df (array_like): raw data potentially with column names if a full dataframe
         train_horizon (int): number of data points in each training observation of the X matrix
         pred_horizon (int): number of data points in each prediction observation of the y matrix
-        column (str): column to use
+        column (str, optional): column to use if df is a pandas dataframe. Defaults to None.
     """
     # number of windows
     num_windows = df.shape[0] - train_horizon - pred_horizon + 1
@@ -19,7 +19,10 @@ def create_univariate_windows(df, train_horizon, pred_horizon, column):
     y = np.zeros([num_windows, pred_horizon])
 
     # create numpy object
-    raw_data = df[[column]].to_numpy()
+    if column is not None:
+        raw_data = df[[column]].to_numpy()
+    else:
+        raw_data = np.array(df)
 
     # loop through the windows
     for i in range(num_windows):
