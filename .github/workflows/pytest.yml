@@ -33,7 +33,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pytest coverage
+          pip install pytest coverage scikit-learn
           pip install .
       - name: Run tests with using pytest
         run: |
