@@ -28,8 +28,8 @@ def create_univariate_windows(df, train_horizon, pred_horizon, column=None):
     for i in range(num_windows):
 
         # store X and Y information
-        X[i] = raw_data[i: i+train_horizon]
-        y[i] = raw_data[i+train_horizon: i+train_horizon+pred_horizon].reshape(1, -1)[0]
+        X[i] = raw_data[i: i + train_horizon]
+        y[i] = raw_data[i + train_horizon: i + train_horizon + pred_horizon].reshape(1, -1)[0]
 
     return X, y
 
@@ -68,7 +68,7 @@ def create_multivariate_windows(df, train_horizon, pred_horizon, train_columns=N
     for i in range(num_windows):
 
         # store X and Y information
-        X[i] = raw_X_data[i: i+train_horizon]
-        y[i] = raw_y_data[i+train_horizon: i+train_horizon+pred_horizon]
+        X[i] = raw_X_data[i: i + train_horizon]
+        y[i] = raw_y_data[i + train_horizon: i + train_horizon + pred_horizon]
 
     return X, y
