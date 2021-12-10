@@ -1,8 +1,7 @@
 # TimeWarPY - Time Series Pre and Post Processing Methods
 
-[GitHub](https://github.com/celmore25/TimeWarPY)
-
-[Full Documentation](https://timewarpy.readthedocs.io/en/latest/)
+[![actions](https://github.com/celmore25/TimeWarPY/actions/workflows/pytest.yml/badge.svg)](https://github.com/celmore25/TimeWarPY)
+[![docs](https://readthedocs.org/projects/timewarpy/badge/?version=latest&style=flat)](https://timewarpy.readthedocs.io/en/latest/)
 
 ## Background and Objective
 
