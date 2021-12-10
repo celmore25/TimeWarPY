@@ -37,7 +37,7 @@ windows = 7
 full_time_series = X[0][:].T[0]
 
 # make plot and add to it
-fig, ax = plt.subplots(windows + 1, 1, figsize=(10, windows*1.8), sharex=True)
+fig, ax = plt.subplots(windows + 1, 1, figsize=(10, windows * 1.8), sharex=True)
 
 # roll windows
 for w in range(windows):
@@ -50,7 +50,7 @@ for w in range(windows):
 
     # append to main time series
     full_time_series = np.append(full_time_series, [y_plot_pred[0]])
-    if w+1 == windows:
+    if w + 1 == windows:
         full_time_series = np.append(full_time_series, y_plot_pred)
 
     # plot individual values
