@@ -2,21 +2,20 @@
 
 ## Preprocessing Univariate Data for Recurrent Neural Network Training
 
-With less than 40 lines, you can use TensorFlow and TimeWarPY to create a fully trained model for time series forecasting. A comparison of the complexity decrease can be seen [here](https://www.tensorflow.org/tutorials/structured_data/time_series#data_windowing) in the TensorFlow docs.
+With less than 30 lines, you can use TensorFlow and TimeWarPY to create a fully trained model for time series forecasting. A comparison of the complexity decrease can be seen [here](https://www.tensorflow.org/tutorials/structured_data/time_series#data_windowing) in the TensorFlow docs.
 
 ```py
 # load libraries
 import tensorflow as tf
 import numpy as np
 from sklearn.model_selection import train_test_split
-from timewarpy import preprocess, datasets
+from sklearn.preprocessing import MinMaxScaler
+from timewarpy import core, datasets
 
 # load and preprocess
 df = datasets.load_energy_data()
-X, y = preprocess.create_univariate_windows(df, 1000, 100, 'Appliances')
-max_val = X.max()
-X = X/max_val
-y = y/max_val
+TSprocessor = core.UnivariateTS(1000, 100, scaler=MinMaxScaler)
+X, y = TSprocessor.fit_transform(df, 'Appliances')
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
 print(f'Original dataframe shape: {df.shape}')
 print(f'X training vector shape: {X_train.shape}')
@@ -24,23 +23,14 @@ print(f'y training vector shape: {y_train.shape}')
 
 # train small tensorflow model
 model = tf.keras.models.Sequential()
-model.add(tf.keras.layers.LSTM(10, activation='tanh', recurrent_activation='sigmoid',
-                               return_sequences=False, input_shape=X_train[0].shape))
+model.add(tf.keras.layers.LSTM(10, activation='tanh', recurrent_activation='sigmoid', input_shape=X_train[0].shape))
 model.add(tf.keras.layers.Dense(100))
-model.compile(
-    optimizer=tf.keras.optimizers.Adam(learning_rate=1e-3),
-    loss='mean_squared_error',
-)
-history = model.fit(
-    X_train,
-    y_train,
-    epochs=2,
-    batch_size=100,
-)
+model.compile(optimizer='Adam', loss='mean_squared_error',)
+history = model.fit(X_train, y_train, epochs=2, batch_size=100,)
 
 # make predictions
 y_pred = model.predict(X_test)
-mae = np.mean(np.abs(y_test - y_pred)) * max_val
+mae = np.mean(np.abs(TSprocessor.inverse_transform(y_test - y_pred)))
 print(f'y prediction vector shape: {y_pred.shape}')
 print(f'Model Mean Absolute Error: {mae:.2f}')
 ```
