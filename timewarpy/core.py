@@ -1,6 +1,9 @@
 from timewarpy import preprocess
 
 
+# TODO: make base transformer that each inherit from
+
+
 class UnivariateTS:
     """Core object for processing univariate time series. Use this object
     to set up and save all necessary transformations for pre and post model
@@ -27,7 +30,7 @@ class UnivariateTS:
         self.pred_horizon = pred_horizon
         self.roll_increment = roll_increment
         if scaler is not None:
-            self.scaler = scaler()
+            self.scaler = scaler
         else:
             self.scaler = None
 
@@ -41,8 +44,9 @@ class UnivariateTS:
             df (pandas.DataFrame): univariate time series
             column (str): column to use in the dataframe
         """
+        self.column = column
         if self.scaler is not None:
-            self.scaler.fit(df[column].to_numpy().reshape(-1, 1))
+            self.scaler().fit(df[column].to_numpy().reshape(-1, 1))
 
     def transform(self, df, column):
         """Given a pandas dataframe and column for the univariate
@@ -93,3 +97,48 @@ class UnivariateTS:
         else:
             vec_inv = self.scaler.inverse_transform(vec)
         return vec_inv
+
+
+class MultivariateTS:
+    """Core object for processing multivariate time series. Use this object
+    to set up and save all necessary transformations for pre and post model
+    processing of a time series that only contains one dimension outside of time.
+    """
+
+    def __init__(self, train_horizon: int, pred_horizon: int, scaler: object = None,
+                 roll_increment: int = 0):
+        """Initializes the core class. First, this sets the values for how many
+        time points should be in the training and forecasting windows.
+
+        TODO: Need example
+
+        Second, this also defines any scaling that needs to occur the variable changing in time.
+        Scaling functionality follows the scikit-learn standards for methods needed. See an example
+        of a standard scaler [here](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html).
+
+        Args:
+            train_horizon (int): number of time steps in each training vector
+            pred_horizon (int): number of time steps in each prediction vector
+            scaler (object, optional): scaling function to use, usage follows scikit-learn. Defaults to None.
+            roll_increment (int, optional): how many time sets to skip while rolling windows. Defaults to 0.
+        """
+        self.__str__ = 'Multivariate Time Series Processing Class'
+        self.train_horizon = train_horizon
+        self.pred_horizon = pred_horizon
+        self.roll_increment = roll_increment
+        if scaler is not None:
+            self.scaler = scaler
+        else:
+            self.scaler = None
+
+    def fit(self, df, train_columns, pred_columns):
+        return None
+
+    def transform(self, df, train_columns, pred_columns):
+        return None
+
+    def fit_transform(self, df, train_columns, pred_columns):
+        return None
+
+    def inverse_transform(self, vec):
+        return None
