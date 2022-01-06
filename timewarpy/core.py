@@ -46,7 +46,7 @@ class UnivariateTS:
         """
         self.column = column
         if self.scaler is not None:
-            self.scaler().fit(df[column].to_numpy().reshape(-1, 1))
+            self.scaler = self.scaler().fit(df[column].to_numpy().reshape(-1, 1))
 
     def transform(self, df, column):
         """Given a pandas dataframe and column for the univariate
@@ -132,13 +132,66 @@ class MultivariateTS:
             self.scaler = None
 
     def fit(self, df, train_columns, pred_columns):
+        """Given a pandas dataframe and columns for training and prediction columns in a
+        multivariate time series data, this will fit necessary preprocessing to the
+        given data columns. Currently this is only fitting the scalar to
+        the given column in the __init__ function.
+
+        Args:
+            df (pandas.DataFrame): multivariate time series
+            train_columns (list): columns for training features to use in the dataframe
+            train_columns (list): columns for prediction variables
+
+        """
+        self.train_columns = train_columns
+        self.pred_columns = pred_columns
+        all_cols = set(self.train_columns + self.pred_columns)
+        self.scaler_dict = dict(zip(all_cols, [self.scaler() for i in all_cols]))
+        if self.scaler is not None:
+            for column in all_cols:
+                self.scaler_dict[column].fit(df[column].to_numpy().reshape(-1, 1))
         return None
 
     def transform(self, df, train_columns, pred_columns):
-        return None
+        """Given a pandas dataframe and columns for the multivariate
+        time series data, tranform the data to a neural network friendly
+        set of vectors.
+
+        Args:
+            df (pandas.DataFrame): multivariate time series
+            train_columns (list): columns for training features to use in the dataframe
+            train_columns (list): columns for prediction variables
+
+        Returns:
+            tuple: X (np.array) training vectors, y (np.array) forecasting/prediction vectors
+        """
+        all_cols = set(self.train_columns + self.pred_columns)
+        for column in all_cols:
+            df[column] = self.scaler_dict[column].transform(df[column].to_numpy().reshape(-1,1)).T[0]
+        X, y = preprocess.create_multivariate_windows(
+            df,
+            train_horizon=self.train_horizon,
+            pred_horizon=self.pred_horizon,
+            train_columns=train_columns,
+            pred_columns=pred_columns,
+        )
+        return X, y
 
     def fit_transform(self, df, train_columns, pred_columns):
-        return None
+        """Runs the core.MultivariateTS fit and transform functions in one call.
 
-    def inverse_transform(self, vec):
-        return None
+        Args:
+            df (pandas.DataFrame): multivariate time series
+            train_columns (list): columns for training features to use in the dataframe
+            train_columns (list): columns for prediction variables
+
+        Returns:
+            tuple: X (np.array) training vectors, y (np.array) forecasting/prediction vectors
+        """
+        self.fit(df, train_columns, pred_columns)
+        X, y = self.transform(df, train_columns, pred_columns)
+        return X, y
+
+    # TODO: inverse transformation
+    # def inverse_transform(self, vec):
+    #     return None
