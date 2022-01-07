@@ -146,10 +146,12 @@ class MultivariateTS:
         self.train_columns = train_columns
         self.pred_columns = pred_columns
         all_cols = set(self.train_columns + self.pred_columns)
-        self.scaler_dict = dict(zip(all_cols, [self.scaler() for i in all_cols]))
         if self.scaler is not None:
+            self.scaler_dict = dict(zip(all_cols, [self.scaler() for i in all_cols]))
             for column in all_cols:
-                self.scaler_dict[column].fit(df[column].to_numpy().reshape(-1, 1))
+                self.scaler_dict[column] = self.scaler_dict[column].fit(df[column].to_numpy().reshape(-1, 1))
+        else:
+            self.scaler_dict = None
         return None
 
     def transform(self, df, train_columns, pred_columns):
@@ -165,9 +167,10 @@ class MultivariateTS:
         Returns:
             tuple: X (np.array) training vectors, y (np.array) forecasting/prediction vectors
         """
-        all_cols = set(self.train_columns + self.pred_columns)
-        for column in all_cols:
-            df[column] = self.scaler_dict[column].transform(df[column].to_numpy().reshape(-1,1)).T[0]
+        if self.scaler is not None:
+            all_cols = set(self.train_columns + self.pred_columns)
+            for column in all_cols:
+                df[column] = self.scaler_dict[column].transform(df[column].to_numpy().reshape(-1,1)).T[0]
         X, y = preprocess.create_multivariate_windows(
             df,
             train_horizon=self.train_horizon,
